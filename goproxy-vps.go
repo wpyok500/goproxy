@@ -426,7 +426,7 @@ func (h *HTTP2Handler) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		req.Proto = "HTTP/1.1"
 	}
 
-	if req.URL.Host == req.TLS.ServerName && h.Fallback != nil {
+	if req.URL.Hostname() == req.TLS.ServerName && h.Fallback != nil {
 		req.URL.Scheme = h.Fallback.Scheme
 		req.URL.Scheme = h.Fallback.Scheme
 		req.URL.Host = h.Fallback.Host
