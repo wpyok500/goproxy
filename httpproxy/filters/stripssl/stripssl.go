@@ -195,24 +195,10 @@ func (f *Filter) issue(host string) (_ *tls.Config, err error) {
 			return nil, err
 		}
 		config = &tls.Config{
-			Certificates: []tls.Certificate{*cert},
-			// TODO: follow up https://blog.gopheracademy.com/advent-2016/exposing-go-on-the-internet/
-			// MinVersion:               tls.VersionTLS12,
-			// PreferServerCipherSuites: true,
-			// CurvePreferences: []tls.CurveID{
-			// 	tls.CurveP256,
-			// 	tls.X25519,
-			// },
-			// CipherSuites: []uint16{
-			// 	tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
-			// 	tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-			// 	tls.TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,
-			// 	tls.TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,
-			// 	tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-			// 	tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-			// 	tls.TLS_RSA_WITH_AES_256_GCM_SHA384,
-			// 	tls.TLS_RSA_WITH_AES_128_GCM_SHA256,
-			// },
+			Certificates:             []tls.Certificate{*cert},
+			MaxVersion:               tls.VersionTLS13,
+			MinVersion:               tls.VersionTLS10,
+			PreferServerCipherSuites: true,
 		}
 		f.TLSConfigCache.Set(name, config, time.Now().Add(f.CAExpiry))
 	}
